@@ -16,7 +16,8 @@
         
         <ul>
             <li><a href="adiciona-pessoa.jsp">Add Pessoa</a></li>
-            <li><a href="/ProjetoFrontController/Controller?command=ExibePaginaColorados">Exibe Página para Colorados</a></li>
+            <li><a href="pessoa.jsp">Lista de Pessoa</a></li>
+            <li><a href="/WebApplicationTrabalho/Controller?command=ExibePaginaColorados">Exibe Página para Colorados</a></li>
         </ul>
     </body>
 </html>

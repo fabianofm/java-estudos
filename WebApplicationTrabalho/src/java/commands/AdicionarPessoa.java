@@ -7,6 +7,9 @@ package commands;
 
 import dao.PessoaDAO;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,6 +33,7 @@ public class AdicionarPessoa implements Command {
             // pegando os parâmetros do request
             String nome = request.getParameter("nome");
             String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
             String dataEmTexto = request.getParameter("dataNascimento");
             Calendar dataNascimento = null;
 
@@ -42,6 +46,7 @@ public class AdicionarPessoa implements Command {
             Pessoa pessoa = new Pessoa();
             pessoa.setNome(nome);
             pessoa.setEmail(email);
+            pessoa.setSenha(convertStringToMd5(senha));
             //pessoa.setDataNascimento(data.getTime());
             pessoa.setDataNascimento(dataNascimento.getTime());
 
@@ -58,4 +63,32 @@ public class AdicionarPessoa implements Command {
         }
 
     }
+
+    public static String convertStringToMd5(String valor) {
+        MessageDigest mDigest;
+        try {
+            //Instanciamos o nosso HASH MD5, poderíamos usar outro como
+            //SHA, por exemplo, mas optamos por MD5.
+            mDigest = MessageDigest.getInstance("MD5");
+
+            //Convert a String valor para um array de bytes em MD5
+            byte[] valorMD5 = mDigest.digest(valor.getBytes("UTF-8"));
+
+            //Convertemos os bytes para hexadecimal, assim podemos salvar
+            //no banco para posterior comparação se senhas
+            StringBuilder sb = new StringBuilder();
+            for (byte b : valorMD5) {
+                sb.append(Integer.toHexString((b & 0xFF) | 0x100).substring(1, 3));
+            }
+
+            return sb.toString();
+
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+// TODO Auto-generated catch block
+            return null;
+        }
+        // TODO Auto-generated catch block
+
+    }
+
 }

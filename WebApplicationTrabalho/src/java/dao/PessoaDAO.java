@@ -5,9 +5,14 @@
  */
 package dao;
 
+import commands.AdicionarPessoa;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import model.Pessoa;
 
 /**
@@ -82,20 +87,70 @@ public class PessoaDAO {
     }
   }
 
-  /**
-   * Consulta o pessoa pelo ID.
-   * @param id
-   * @return o objeto Pessoa.
-   */
-  public Pessoa consultarPorId(Long id) {
-    EntityManager entityManager = getEntityManager();
-    Pessoa pessoa = null;
-    try {
-      //Consulta uma pessoa pelo seu ID.
-      pessoa = entityManager.find(Pessoa.class, id);
-    } finally {
-      entityManager.close();
+  public List<Pessoa> findPessoaEntities() {
+        return findPessoaEntities(true, -1, -1);
     }
-    return pessoa;
-  }
+
+    public List<Pessoa> findPessoaEntities(int maxResults, int firstResult) {
+        return findPessoaEntities(false, maxResults, firstResult);
+    }
+
+    private List<Pessoa> findPessoaEntities(boolean all, int maxResults, int firstResult) {
+    
+        EntityManager entityManager = getEntityManager();
+        try {
+            CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Pessoa.class));
+            Query q = entityManager.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public Pessoa findPessoa(Long id) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            return entityManager.find(Pessoa.class, id);
+        } finally {
+            entityManager.close();
+        }
+    }
+ /*
+    public int getPessoaCount() {
+        try {
+            EntityManager entityManager = getEntityManager();
+            CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
+            Root<Pessoa> rt = cq.from(Pessoa.class);
+            cq.select(entityManager.getCriteriaBuilder().count(rt));
+            Query q = entityManager.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            entityManager.close();
+        }
+    }
+*/
+    public Pessoa login(String nome, String senha) {
+         EntityManager entityManager = getEntityManager();
+        Query q = entityManager.createQuery("SELECT p from Pessoa p WHERE "
+                + "p.nome = :nome AND p.senha = :senha ");
+        
+        senha = AdicionarPessoa.convertStringToMd5(senha);
+        q.setParameter("nome", nome);
+        q.setParameter("senha", senha);
+
+        List<Pessoa> ls = q.getResultList();
+
+        if (ls.size() == 1) {
+            return ls.get(0);
+        }
+        return null;
+    }
+
+  
+  
 }

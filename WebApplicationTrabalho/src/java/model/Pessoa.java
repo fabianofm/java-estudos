@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,6 +21,11 @@ import javax.persistence.TemporalType;
  * Classe utilizada para representar uma pessoa.
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p"),
+    @NamedQuery(name = "Pessoa.findById", query = "SELECT p FROM Pessoa p WHERE p.id = :id"),
+    @NamedQuery(name = "Pessoa.findByNome", query = "SELECT p FROM Pessoa p WHERE p.nome = :nome"),
+    @NamedQuery(name = "Pessoa.findBySenha", query = "SELECT p FROM Pessoa p WHERE p.senha = :senha")})
 public class Pessoa implements Serializable {
 
     @Id 
@@ -30,6 +37,7 @@ public class Pessoa implements Serializable {
     @Column(name = "dataNasc", nullable = false)
     private Date dataNascimento;
     private String email;
+    private String senha;
 
     public Date getDataNascimento() {
         return dataNascimento;
@@ -61,5 +69,13 @@ public class Pessoa implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

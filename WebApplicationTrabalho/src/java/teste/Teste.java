@@ -9,10 +9,12 @@ package teste;
  *
  * @author fabia
  */
+import commands.AdicionarPessoa;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import dao.PessoaDAO;
 import model.Pessoa;
+
 
 /**
  * Classe utilizada para testar os métodos do PessoaDAO.
@@ -20,6 +22,9 @@ import model.Pessoa;
 public class Teste {
 
     public static void main(String[] args) throws Exception {
+        
+        
+        
         Pessoa pessoa = new Pessoa();
         pessoa.setNome("Fabiano");
         Calendar data = new GregorianCalendar();
@@ -28,6 +33,7 @@ public class Teste {
         data.set(Calendar.DAY_OF_MONTH, 26);
         pessoa.setDataNascimento(data.getTime());
         pessoa.setEmail("rafael.sakurai@metodista.br");
+       pessoa.setSenha(AdicionarPessoa.convertStringToMd5("123"));
 
         PessoaDAO dao = new PessoaDAO();
         System.out.println("Salvando a pessoa: " + pessoa.getNome());
