@@ -15,9 +15,10 @@
         <h1>Hello World!</h1>
         
         <ul>
-            <li><a href="adiciona-pessoa.jsp">Add Pessoa</a></li>
-            <li><a href="pessoa.jsp">Lista de Pessoa</a></li>
-            <li><a href="/WebApplicationTrabalho/Controller?command=ExibePaginaColorados">Exibe Página para Colorados</a></li>
+            <li><a href="<%=request.getContextPath()%>/login.jsp">Login</a></li>
+            <li><a href="<%=request.getContextPath()%>/adiciona-pessoa.jsp">Add Pessoa</a></li>
+            <li><a href="<%=request.getContextPath()%>/pessoa.jsp">Lista de Pessoa</a></li>
+            <li><a href="<%=request.getContextPath()%>/Controller?command=ExibePaginaColorados">Exibe Página para Colorados</a></li>
         </ul>
     </body>
 </html>

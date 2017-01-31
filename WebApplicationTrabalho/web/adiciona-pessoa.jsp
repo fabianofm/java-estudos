@@ -14,7 +14,7 @@
     <body>
         <h1>Adiciona Contato!</h1>
 
-        <form method="post" action="/WebApplicationTrabalho/Controller?command=AdicionarPessoa">
+        <form method="post" action="<%=request.getContextPath()%>/Controller?command=AdicionarPessoa">
             Nome: <input name="nome"/><br/>
             Email: <input name="email"/><br/>
             Senha: <input name="senha"/><br/>
