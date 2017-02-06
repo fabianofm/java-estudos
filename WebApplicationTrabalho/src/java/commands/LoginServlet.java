@@ -31,8 +31,8 @@ public class LoginServlet implements Command {
 
             if (dao.login(login, senha) != null) {
                 HttpSession httpSession = request.getSession(true);
-                httpSession.setAttribute("nome", login);
-                response.sendRedirect(request.getContextPath()+"/Usuario.jsp");
+                httpSession.setAttribute("login", login);
+                response.sendRedirect(request.getContextPath()+"/listar-usuarios.jsp");
             } else {
                 request.setAttribute("ERR", "Loi");
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
