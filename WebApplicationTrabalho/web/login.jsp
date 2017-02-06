@@ -31,8 +31,8 @@
     </head>
     <body>
         <form method="POST" action="<%=request.getContextPath()%>/Controller?command=LoginServlet" onsubmit="return validate();">
-            <label>Username</label><br>
-            <input type="text" name="nome" id="a"><br>
+            <label>Login</label><br>
+            <input type="text" name="login" id="a"><br>
             <label>Password</label><br>
             <input type="password" name="senha" id="b"><br>
             <input type="submit" class="button" value="Login">

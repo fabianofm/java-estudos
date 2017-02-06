@@ -9,11 +9,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import dao.PessoaDAO;
+import dao.UsuarioDAO;
 
 /**
  *
@@ -25,15 +24,15 @@ public class LoginServlet implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             
-            String nome = request.getParameter("nome");
+            String login = request.getParameter("login");
             String senha = request.getParameter("senha");
             
-            PessoaDAO dao = new PessoaDAO();
+            UsuarioDAO dao = new UsuarioDAO();
 
-            if (dao.login(nome, senha) != null) {
+            if (dao.login(login, senha) != null) {
                 HttpSession httpSession = request.getSession(true);
-                httpSession.setAttribute("nome", nome);
-                response.sendRedirect(request.getContextPath()+"/pessoa.jsp");
+                httpSession.setAttribute("nome", login);
+                response.sendRedirect(request.getContextPath()+"/Usuario.jsp");
             } else {
                 request.setAttribute("ERR", "Loi");
                 request.getRequestDispatcher("/index.jsp").forward(request, response);

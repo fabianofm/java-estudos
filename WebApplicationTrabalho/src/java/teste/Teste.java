@@ -9,44 +9,46 @@ package teste;
  *
  * @author fabia
  */
-import commands.AdicionarPessoa;
+import commands.AdicionarUsuario;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import dao.PessoaDAO;
-import model.Pessoa;
-
+import dao.UsuarioDAO;
+import java.util.Date;
+import model.Usuario;
 
 /**
- * Classe utilizada para testar os métodos do PessoaDAO.
+ * Classe utilizada para testar os métodos do UsuarioDAO.
  */
 public class Teste {
 
     public static void main(String[] args) throws Exception {
-        
-        
-        
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome("Fabiano");
+
+        Usuario Usuario = new Usuario();
+
         Calendar data = new GregorianCalendar();
+        Date now = new Date();
+
+        Usuario.setNome("Fabiano");
         data.set(Calendar.YEAR, 1983);
         data.set(Calendar.MONTH, 11);
         data.set(Calendar.DAY_OF_MONTH, 26);
-        pessoa.setDataNascimento(data.getTime());
-        pessoa.setEmail("rafael.sakurai@metodista.br");
-       pessoa.setSenha(AdicionarPessoa.convertStringToMd5("123"));
+        Usuario.setDataCadastro(now);
+        Usuario.setDataNascimento(data.getTime());
+        Usuario.setEmail("rafael.sakurai@metodista.br");
+        Usuario.setLogin("fabi");
+        Usuario.setSenha(AdicionarUsuario.convertStringToMd5("123"));
 
-        PessoaDAO dao = new PessoaDAO();
-        System.out.println("Salvando a pessoa: " + pessoa.getNome());
-        pessoa = dao.salvar(pessoa);
+        UsuarioDAO dao = new UsuarioDAO();
+        System.out.println("Salvando a Usuario: " + Usuario.getNome());
+        Usuario = dao.salvar(Usuario);
 
-        pessoa.setNome("Vitorino Salvieir");
-        pessoa = dao.salvar(pessoa);
-        System.out.println("Alterando a pessoa: " + pessoa.getNome());
+        Usuario.setNome("Vitorino Salvieir");
+        Usuario = dao.salvar(Usuario);
+        System.out.println("Alterando a Usuario: " + Usuario.getNome());
 
-        //Pessoa pessoa2 = dao.consultarPorId(pessoa.getId());
-        //System.out.println("Consultando: " + pessoa2.getNome());
-
-        //System.out.println("Removendo a pessoa: " + pessoa.getId());
-        //dao.excluir(pessoa.getId());
+        //Usuario Usuario2 = dao.consultarPorId(Usuario.getId());
+        //System.out.println("Consultando: " + Usuario2.getNome());
+        //System.out.println("Removendo a Usuario: " + Usuario.getId());
+        //dao.excluir(Usuario.getId());
     }
 }
