@@ -25,22 +25,26 @@ public class ListarUsuarios implements Command {
 
         try {
 
-            HttpSession session = request.getSession(false);
-            String s = session.getAttribute("login").toString();
+            HttpSession session = request.getSession();
 
-            if (s.equals("admin")) {
-
-                RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-usuarios.jsp");
-                d.forward(request, response);
-
+            Object loginFlag = session.getAttribute("login");
+            if (loginFlag != null) {
+                String loginFlagStr = String.valueOf(loginFlag);
+                if ("admin".equalsIgnoreCase(loginFlagStr)) {
+                    RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-usuarios.jsp");
+                    d.forward(request, response);
+                } else {
+                    // not yes
+                    response.sendRedirect("login.jsp");
+                }
             } else {
-                
+                // null
                 response.sendRedirect("login.jsp");
             }
 
-        } catch (IOException e) {
-            e.toString();
         } catch (ServletException ex) {
+            Logger.getLogger(ListarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(ListarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
 

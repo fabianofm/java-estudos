@@ -21,17 +21,19 @@ public class Logout implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
+ try {
+            HttpSession session = request.getSession();
 
-                session.invalidate();
-                httpSession.setAttribute("login", login);
-                response.sendRedirect("index.jsp");
-
+            if (!session.isNew()) {
+               
+                    session.invalidate();
+                    session = request.getSession();
+                    response.sendRedirect("index.jsp");
+                
             }
-        } catch (IOException ex) {
-            Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, null, ex);
-        }
+} catch (IOException ex) {
+                    Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, null, ex);
+                }
+     
     }
 }
