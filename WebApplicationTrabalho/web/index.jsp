@@ -12,11 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1> <a href="#">Welcome, ${sessionScope.login }</a>!</h1>
         
         <ul>
             <li><a href="<%=request.getContextPath()%>/login.jsp">Login</a></li>
             <li><a href="<%=request.getContextPath()%>/cadastro.jsp">Cadastro</a></li>
+            <li><a href="<%=request.getContextPath()%>/Controller?command=CadastrarOpcionais">Cadastrar Opcionais</a></li>
             <li><a href="<%=request.getContextPath()%>/Controller?command=ListarUsuarios">Listar de Usuarios</a></li>
              <li><a href="<%=request.getContextPath()%>/Controller?command=ListarOpcionais">Listar Opcionais</a></li>
             <li><a href="<%=request.getContextPath()%>/Controller?command=ExibePaginaColorados">Exibe Página para Colorados</a></li>

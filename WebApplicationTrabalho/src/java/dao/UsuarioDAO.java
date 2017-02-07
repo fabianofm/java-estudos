@@ -140,6 +140,7 @@ public class UsuarioDAO {
                 + "u.login = :login AND u.senha = :senha ");
         
         senha = AdicionarUsuario.convertStringToMd5(senha);
+        
         q.setParameter("login", login);
         q.setParameter("senha", senha);
 

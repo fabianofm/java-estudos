@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import dao.UsuarioDAO;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -32,21 +33,16 @@ public class LoginServlet implements Command {
             if (dao.login(login, senha) != null) {
                 HttpSession httpSession = request.getSession(true);
                 httpSession.setAttribute("login", login);
-                response.sendRedirect(request.getContextPath()+"/listar-usuarios.jsp");
+                
+                RequestDispatcher d = request.getRequestDispatcher("index.jsp");
+                d.forward(request, response);
             } else {
                 request.setAttribute("ERR", "Loi");
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
             }
             
         } catch (IOException | ServletException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-           
-            try {
-                request.getSession().invalidate();
-                response.sendRedirect(request.getContextPath()+"/admin/login.jsp");
-            } catch (IOException ex1) {
-                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            }
         }
     }
 
