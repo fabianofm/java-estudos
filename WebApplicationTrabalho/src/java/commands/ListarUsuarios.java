@@ -5,7 +5,6 @@
  */
 package commands;
 
-import static com.sun.xml.ws.security.addressing.impl.policy.Constants.logger;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +33,10 @@ public class ListarUsuarios implements Command {
                 if (s.equals("admin")) {
                     RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-usuarios.jsp");
                     d.forward(request, response);
+                } else {
+                    RequestDispatcher d = request.getRequestDispatcher("login.jsp");
+                d.forward(request, response);
+                 return;
                 }
             } else {
                 RequestDispatcher d = request.getRequestDispatcher("login.jsp");

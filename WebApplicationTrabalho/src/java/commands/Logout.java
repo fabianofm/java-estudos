@@ -7,6 +7,7 @@ package commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -17,12 +18,10 @@ public class Logout implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-             HttpSession session = request.getSession(false);
+        
+            HttpSession session = request.getSession(false);
             if (session != null) {
                 session.invalidate();
             }
-        }
-
     }
 }
