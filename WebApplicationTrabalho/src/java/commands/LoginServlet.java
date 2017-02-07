@@ -17,33 +17,33 @@ import javax.servlet.RequestDispatcher;
 
 /**
  *
- * @author 
+ * @author
  */
 public class LoginServlet implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
+
         try {
-            
+
             String login = request.getParameter("login");
             String senha = request.getParameter("senha");
-            
+
             UsuarioDAO dao = new UsuarioDAO();
 
             if (dao.login(login, senha) != null) {
                 HttpSession httpSession = request.getSession(true);
                 httpSession.setAttribute("login", login);
-                
-                RequestDispatcher d = request.getRequestDispatcher("index.jsp");
-                d.forward(request, response);
+
+                response.sendRedirect("index.jsp");
+
             } else {
-                request.setAttribute("ERR", "Loi");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                response.sendRedirect("index.jsp");
             }
-            
-        } catch (IOException | ServletException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
 }

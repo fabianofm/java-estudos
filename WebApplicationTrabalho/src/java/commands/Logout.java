@@ -5,6 +5,9 @@
  */
 package commands;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,10 +21,17 @@ public class Logout implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        
+        try {
             HttpSession session = request.getSession(false);
             if (session != null) {
+
                 session.invalidate();
+                httpSession.setAttribute("login", login);
+                response.sendRedirect("index.jsp");
+
             }
+        } catch (IOException ex) {
+            Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
