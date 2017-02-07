@@ -17,7 +17,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="#">Welcome, ${sessionScope.nome }</a>
+        <a href="#">Welcome, ${sessionScope.login }</a>
         <li> <a href="<%=request.getContextPath()%>/Controller?command=LoginServlet" > Logout</a></li>
         <%
             UsuarioDAO dao = new UsuarioDAO();

@@ -136,8 +136,8 @@ public class UsuarioDAO {
 */
     public Usuario login(String login, String senha) {
          EntityManager entityManager = getEntityManager();
-        Query q = entityManager.createQuery("SELECT p from Usuario p WHERE "
-                + "p.login = :login AND p.senha = :senha ");
+        Query q = entityManager.createQuery("SELECT u from Usuario u WHERE "
+                + "u.login = :login AND u.senha = :senha ");
         
         senha = AdicionarUsuario.convertStringToMd5(senha);
         q.setParameter("login", login);
