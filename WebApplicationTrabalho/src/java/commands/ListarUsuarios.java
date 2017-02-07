@@ -5,6 +5,9 @@
  */
 package commands;
 
+import java.io.IOException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,11 +15,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabia
  */
-public class ExibirUsuario implements Command {
-
+public class ListarUsuarios implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
+        
+        try {
 
+            RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-usuarios.jsp");
+            d.forward(request, response);
+
+        } catch (IOException | ServletException e) {
+            e.getStackTrace();
+        }
+        
     }
-
 }

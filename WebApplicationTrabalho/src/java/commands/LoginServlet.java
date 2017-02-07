@@ -40,7 +40,7 @@ public class LoginServlet implements Command {
             
         } catch (IOException | ServletException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-            
+           
             try {
                 request.getSession().invalidate();
                 response.sendRedirect(request.getContextPath()+"/admin/login.jsp");
