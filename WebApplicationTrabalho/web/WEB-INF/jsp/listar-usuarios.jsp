@@ -18,7 +18,7 @@
     <ul>
         <c:forEach var="usuario" items="${dao.findUsuarioEntities()}">
             <li>${usuario.id}</li>
-            <li>${usuario.nome} - ${usuario.login}</li>
+            <li>${usuario.nome} - <a href="<%=request.getContextPath()%>/listar-cesta.jsp?clienteLogin=${usuario.login}">${usuario.login}</a></li>
             <li>${usuario.email}</li>
         </c:forEach>
     </ul>    
