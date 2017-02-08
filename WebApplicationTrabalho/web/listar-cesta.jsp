@@ -12,33 +12,30 @@
         <title>JSP Page</title>
     </head>
     <body>
-       ${sessionScope.login}
-       
-       <% 
+        ${sessionScope.login}
+
+        <c:choose>
+            <c:when test="${sessionScope.login != null && sessionScope.login ne 'admin'}">
+                <% pageContext.setAttribute("cliente", String.valueOf(session.getAttribute("login")), PageContext.SESSION_SCOPE);
+                %>
+            </c:when>
             
-            String value=request.getParameter("clienteLogin").toString();
-           
-           if(value != null ){
+            <c:when test="${sessionScope.login == 'admin'}">
                
-              String cliente=request.getParameter("clienteLogin").toString();
-           
-           } else {
-               String cliente = (String)session.getAttribute("login");
-           }
-           
-           
-            
-            
-       %>
-${value}
-    <jsp:useBean id="dao" class="dao.CestaDAO" />
-    <ul>
-        <c:forEach var="item" items="${dao.findItens(cliente)}">
-            <li>${item.item}</li>
-            
-        </c:forEach>
-    </ul>    
+                <% pageContext.setAttribute("cliente", String.valueOf(request.getParameter("clienteLogin")), PageContext.SESSION_SCOPE);
+                %>
+            </c:when>
+        </c:choose>
+
+        <h1>Lista de  ${sessionScope.cliente}</h1>
+        
+        <jsp:useBean id="dao" class="dao.CestaDAO" />
+        <ul>
+            <c:forEach var="item" items="${dao.findItens(cliente)}">
+                <li>${item.item}</li>
+            </c:forEach>
+        </ul>    
 
 
-</body>
+    </body>
 </html>
