@@ -1,17 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<!DOCTYPE html>
-<html>
-
-    <head>
-        <style type="text/css">
-            .odd{ background-color:red}
-            .even{background-color:white}
-        </style>  
-    </head>    
-
-    <body>
+<%@include file="/WEB-INF/jsp/header.jsp" %>
 
         Olá Colorados, confira tudo sobre o inter aqui. <br/> <br/>
 
@@ -44,6 +33,5 @@
                 </c:forEach>
             </tbody>
         </table>       
-
-    </body>
-</html>
+</div><!-- /.container -->        
+<%@include file="/WEB-INF/jsp/footer.jsp" %>

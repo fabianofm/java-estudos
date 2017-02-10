@@ -1,41 +1,14 @@
-<%-- 
-    Document   : login
-    Created on : 30/01/2017, 15:46:02
-    Author     : fabia
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <script type="text/javascript">
-            function validate()
-            {
-                var a = document.getElementById("a");
-                var b = document.getElementById("b");
-                var valid = true;
-                if (a.value.length <= 0)
-                {
-                    alert("Username không được để trống!");
-                    valid = false;
-                }
-                else if(b.value.length < 2){
-                    alert("Password it nhat 6 ki tu");
-                    valid = false;
-                }
-                return valid;
-            };
-        </script>
-    </head>
-    <body>
+<%@include file="/WEB-INF/jsp/header.jsp" %>
+
         <form method="POST" action="<%=request.getContextPath()%>/Controller?command=LoginServlet" onsubmit="return validate();">
             <label>Login</label><br>
-            <input type="text" name="login" id="a"><br>
+            <input type="text" name="login" class="form-control"  required placeholder="Preencha este campo."><br>
             <label>Password</label><br>
-            <input type="password" name="senha" id="b"><br>
-            <input type="submit" class="button" value="Login">
+            <input type="password" name="senha" class="form-control"  required placeholder="Preencha este campo."><br>
+            <input type="submit" class="btn btn-primary" value="Login">
         </form>
-    </body>
-</html>
+        
+        
+</div><!-- /.container -->
+<%@include file="/WEB-INF/jsp/footer.jsp" %>

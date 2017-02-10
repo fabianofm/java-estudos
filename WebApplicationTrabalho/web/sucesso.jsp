@@ -1,17 +1,5 @@
-<%-- 
-    Document   : contato-adicionado
-    Created on : 27/01/2017, 16:55:49
-    Author     : fab
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
+<%@include file="/WEB-INF/jsp/header.jsp" %>
         <h1>Usuário ${param.nome} adicionado com sucesso!</h1>
-    </body>
-</html>
+</div><!-- /.container -->        
+<%@include file="/WEB-INF/jsp/footer.jsp" %>

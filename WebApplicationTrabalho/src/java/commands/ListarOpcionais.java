@@ -10,26 +10,34 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author fabia
  */
 public class ListarOpcionais implements Command {
-    
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        
-        try {
 
-            RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-opcionais.jsp");
-            d.forward(request, response);
+        try {
+            HttpSession session = request.getSession();
+
+            Object loginFlag = session.getAttribute("login");
+            if (loginFlag != null) {
+                
+                    RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-opcionais.jsp");
+                    d.forward(request, response);
+               
+            } else {
+                // null
+                response.sendRedirect("login.jsp");
+            }
 
         } catch (IOException | ServletException e) {
             e.getStackTrace();
         }
-        
+
     }
 }
-
-
