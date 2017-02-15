@@ -5,7 +5,7 @@
 
 
     <jsp:useBean id="dao" class="dao.ServicosOpcionaisDAO" />
-    <form method="post" action="<%=request.getContextPath()%>/Controller?command=ItemCesta&add=true">
+    <form method="post" action="<%=request.getContextPath()%>/Controller?command=AdicionarItemCesta&add=true">
         <c:forEach var="opcional" items="${dao.findServicosOpcionaisEntities()}" varStatus="id"> 
             
             <c:choose> 

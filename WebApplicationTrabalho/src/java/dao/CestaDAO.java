@@ -123,9 +123,6 @@ public class CestaDAO {
             entityManager.close();
         }
     }
-    
-
-
 
     public List<Cesta> findItens(String login) {
         EntityManager entityManager = getEntityManager();
@@ -133,29 +130,19 @@ public class CestaDAO {
                 + "c.login = :login ");
 
         q.setParameter("login", login);
-
         List<Cesta> ls = q.getResultList();
-
-       
-            return q.getResultList();
-        
-       
+        return q.getResultList();
     }
-    
-    
-    public Cesta login(Integer id) {
-         EntityManager entityManager = getEntityManager();
-        Query q = entityManager.createQuery("SELECT c from Cesta c WHERE "
-                + "c.id = :id ");
-       
-        q.setParameter("id", id);
 
+    public List<Cesta> findLogin(Integer id) {
+        EntityManager entityManager = getEntityManager();
+        Query q = entityManager.createQuery("SELECT c.login from Cesta c WHERE "
+                + "c.id = :id ");
+      
+        q.setParameter("id", id);
         List<Cesta> ls = q.getResultList();
 
-        if (ls.size() == 1) {
-            return ls.get(0);
-        }
-        return null;
+        return q.getResultList();
     }
 
 }
