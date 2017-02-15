@@ -4,8 +4,13 @@
      
 
 
-    <jsp:useBean id="dao" class="dao.ServicosOpcionaisDAO" />
-    <form method="post" action="<%=request.getContextPath()%>/Controller?command=AdicionarItemCesta&add=true">
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="offset1 span8 pull-right">
+ 
+        
+            <jsp:useBean id="dao" class="dao.ServicosOpcionaisDAO" />
+    <form method="post" action="<%=request.getContextPath()%>/Controller?command=AdicionarItemCesta">
         <c:forEach var="opcional" items="${dao.findServicosOpcionaisEntities()}" varStatus="id"> 
             
             <c:choose> 
@@ -44,13 +49,28 @@
     </form>
         
         
-        <h3>Seus Itens</h3>
+    </div>
+    
+    <div class="span8" style="margin-left: 0;">
+    
+                <h3>Seus Itens</h3>
          <jsp:useBean id="daoCesta" class="dao.CestaDAO" />
         <ul>
             <c:forEach var="item" items="${daoCesta.findItens(login )}">
                 <li><a href="<%=request.getContextPath()%>/Controller?command=RemoverItemCesta&id=${item.id}">${item.item}</a></li>
             </c:forEach>
         </ul> 
+    </div>
+
+
+  </div>
+
+</div><!--/.fluid-container-->
+
+
+        
+        
+
         
         
 </div><!-- /.container -->        

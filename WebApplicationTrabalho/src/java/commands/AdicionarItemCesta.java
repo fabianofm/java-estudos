@@ -36,7 +36,7 @@ public class AdicionarItemCesta implements Command {
                 dao.salvar(Cesta);
             }
 
-            RequestDispatcher d = request.getRequestDispatcher("/sucesso.jsp");
+            RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-opcionais.jsp");
             d.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

@@ -73,7 +73,7 @@ public class CestaDAO {
      *
      * @param id
      */
-    public void excluir(Long id) {
+    public void excluir(Integer id) {
         EntityManager entityManager = getEntityManager();
         try {
             // Inicia uma transação com o banco de dados.

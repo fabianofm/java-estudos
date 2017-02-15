@@ -31,25 +31,24 @@ public class RemoverItemCesta implements Command {
 
             CestaDAO dao = new CestaDAO();
 
-            List<Cesta> loginOfItem = dao.findLogin(id);
+            List<Cesta> ofItem = dao.findLogin(id);
+       
+
+            for (Object value : ofItem) {
+                String loginOfItem = String.valueOf( value );
             
-            while (lo/*ginOfItem*/.next()) {
-                String s1 = rs.getString("login");
-                
-            }
-           
-           // for (Cesta cesta : loginOfItem) {
-             //   String loginCesta = cesta.getLogin();
-                
-           //}
+    
                 HttpSession session = request.getSession();
 
                 Object loginFlag = session.getAttribute("login");
                 if (loginFlag != null) {
                     String loginFlagStr = String.valueOf(loginFlag);
-                    if ("fulano".equalsIgnoreCase(loginFlagStr)) {
-                        request.setAttribute("actionDebug", "hi");
-                        RequestDispatcher d = request.getRequestDispatcher("sucesso.jsp");
+                    if (loginOfItem.equalsIgnoreCase(loginFlagStr)) {
+                        //request.setAttribute("actionDebug", loginOfItem);
+                        
+                        dao.excluir(id);
+                        
+                        RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-opcionais.jsp");
                         d.forward(request, response);
                     } else {
                         // not yes
@@ -59,7 +58,7 @@ public class RemoverItemCesta implements Command {
                     // null
                     response.sendRedirect("login.jsp");
                 }
-            
+            }
 
             //dao.excluir(id);
 

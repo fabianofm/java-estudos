@@ -47,7 +47,6 @@
                         <li><a href="<%=request.getContextPath()%>/Controller?command=CadastrarOpcionais">Cadastrar Opcionais</a></li>
                         <li><a href="<%=request.getContextPath()%>/Controller?command=ListarUsuarios">Listar de Usuarios</a></li>
                         <li><a href="<%=request.getContextPath()%>/Controller?command=ListarOpcionais">Listar Opcionais</a></li>
-                        <li><a href="<%=request.getContextPath()%>/Controller?command=ExibePaginaColorados">Exibe Página para Colorados</a></li>
                         <li><a href="<%=request.getContextPath()%>/Controller?command=Logout">Logout</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
