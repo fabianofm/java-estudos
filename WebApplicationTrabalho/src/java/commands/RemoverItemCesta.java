@@ -17,24 +17,17 @@ import model.Cesta;
  *
  * @author fabiano
  */
-public class AdicionarItemCesta implements Command {
+public class RemoverItemCesta implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             // pegando os parâmetros do request
             String login = request.getParameter("login");
-            String[] item = request.getParameterValues("item");
 
-            for (String ite : item) {
-                Cesta Cesta = new Cesta();
-                CestaDAO dao = new CestaDAO();
+            CestaDAO dao = new CestaDAO();
 
-                Cesta.setLogin(login);
-                Cesta.setItem(ite);
-
-                dao.salvar(Cesta);
-            }
+            dao.excluir(id);
 
             RequestDispatcher d = request.getRequestDispatcher("/sucesso.jsp");
             d.forward(request, response);

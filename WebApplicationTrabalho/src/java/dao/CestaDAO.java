@@ -141,5 +141,21 @@ public class CestaDAO {
         
        
     }
+    
+    
+    public Cesta login(Integer id) {
+         EntityManager entityManager = getEntityManager();
+        Query q = entityManager.createQuery("SELECT c from Cesta c WHERE "
+                + "c.id = :id ");
+       
+        q.setParameter("id", id);
+
+        List<Cesta> ls = q.getResultList();
+
+        if (ls.size() == 1) {
+            return ls.get(0);
+        }
+        return null;
+    }
 
 }

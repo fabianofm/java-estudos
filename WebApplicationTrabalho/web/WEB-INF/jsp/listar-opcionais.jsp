@@ -5,7 +5,7 @@
 
 
     <jsp:useBean id="dao" class="dao.ServicosOpcionaisDAO" />
-    <form method="post" action="<%=request.getContextPath()%>/Controller?command=AdicionarItemCesta">
+    <form method="post" action="<%=request.getContextPath()%>/Controller?command=ItemCesta&add=true">
         <c:forEach var="opcional" items="${dao.findServicosOpcionaisEntities()}" varStatus="id"> 
             
             <c:choose> 
@@ -42,5 +42,16 @@
         <input type="hidden" name="login" value="${sessionScope.login }" />
         <input type="submit" value="Cadastrar" class="btn btn-primary" />
     </form>
+        
+        
+        <h3>Seus Itens</h3>
+         <jsp:useBean id="daoCesta" class="dao.CestaDAO" />
+        <ul>
+            <c:forEach var="item" items="${daoCesta.findItens(login )}">
+                <li><a href="<%=request.getContextPath()%>/Controller?command=RemoverItemCesta&id=${item.id}">${item.item}</a></li>
+            </c:forEach>
+        </ul> 
+        
+        
 </div><!-- /.container -->        
 <%@include file="/WEB-INF/jsp/footer.jsp" %>
