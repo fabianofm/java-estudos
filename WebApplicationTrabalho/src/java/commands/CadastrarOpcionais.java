@@ -27,8 +27,7 @@ public class CadastrarOpcionais implements Command {
                     RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/cadastrar-opcionais.jsp");
                     d.forward(request, response);
                 } else {
-                    // not yes
-                    response.sendRedirect("login.jsp");
+                    response.sendRedirect("restrito.jsp");
                 }
             } else {
                 // null

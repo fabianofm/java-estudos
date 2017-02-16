@@ -29,7 +29,7 @@ public class ListarUsuarios implements Command {
                     RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-usuarios.jsp");
                     d.forward(request, response);
                 } else {
-                    response.sendRedirect("login.jsp");
+                    response.sendRedirect("restrito.jsp");
                 }
             } else {
                 // null
