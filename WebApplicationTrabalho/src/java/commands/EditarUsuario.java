@@ -13,6 +13,8 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,13 +28,15 @@ public class EditarUsuario implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        try {
+      
             // pegando os parâmetros do request
             Integer id = Integer.parseInt(request.getParameter("id"));
             String nome = request.getParameter("nome");
-            String email = request.getParameter("email");
             String login = request.getParameter("login");
+            String email = request.getParameter("email");
             String senha = request.getParameter("senha");
+            
+            
             String dataEmTexto = request.getParameter("dataNascimento");
             Calendar dataNascimento = null;
 
@@ -41,25 +45,31 @@ public class EditarUsuario implements Command {
             dataNascimento = Calendar.getInstance();
             dataNascimento.setTime(date);
             Date now = new Date();
+           
 
             // monta um objeto contato
             Usuario Usuario = new Usuario();
+            
             Usuario.setId(id); 
             Usuario.setNome(nome);
-            Usuario.setEmail(email);
             Usuario.setLogin(login);
+            Usuario.setEmail(email);
             Usuario.setSenha(convertStringToMd5(senha));
+            
             Usuario.setDataCadastro(now);
             Usuario.setDataNascimento(dataNascimento.getTime());
 
-            UsuarioDAO dao = new UsuarioDAO();
+            
+
+      try {
+           UsuarioDAO dao = new UsuarioDAO();
             dao.editar(Usuario);
 
             RequestDispatcher d = request.getRequestDispatcher("/sucesso.jsp");
             d.forward(request, response);
-
+            
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.getLogger(EditarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

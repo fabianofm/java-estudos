@@ -2,19 +2,23 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
 
-    <% pageContext.setAttribute("cliente", String.valueOf(session.getAttribute("login")), PageContext.SESSION_SCOPE); %>
+<% pageContext.setAttribute("cliente", String.valueOf(session.getAttribute("login")), PageContext.SESSION_SCOPE);%>
 
-   <jsp:useBean id="dao" class="dao.UsuarioDAO" />
-   <c:forEach var="usuario" items="${dao.findUsuarioLogin(cliente)}">
-    <h1>Cadastre-se</h1>
+<jsp:useBean id="dao" class="dao.UsuarioDAO" />
+
+
+<h1>Cadastre-se</h1>
+<c:forEach var="usuario" items="${dao.findUsuarioLogin(cliente)}">
     <form method="post" action="<%=request.getContextPath()%>/Controller?command=EditarUsuario">
-        <input name="nome" type="hidden" value="${usuario.id}" class="form-control" />
-        <input name="nome" type="hidden" value="01/01/1991" class="form-control" />
+        Login: <input name="login" value="${usuario.login}" class="form-control"   /> <br/>
         Nome: <input name="nome" value="${usuario.nome}" class="form-control" required  /> <br/>
         Email: <input name="email" value="${usuario.email}" class="form-control" required /><br/>
-
         Senha: <input name="senha" value="" class="form-control" required /><br/>
-        Nascimento: <input name="dataNascimento" value="01/01/1991" class="form-control"  /><br/>
+        <input name="id" type="hidden" value="${usuario.id}" />
+        
+        <input name="dataCadastro" type="hidden" value="${usuario.dataCadastro}" />
+        <input name="dataNascimento" type="hidden" value="${usuario.dataNascimento}" />
+        
         <input type="submit" value="Cadastrar" class="btn btn-primary" />
     </form>  
 </c:forEach>
