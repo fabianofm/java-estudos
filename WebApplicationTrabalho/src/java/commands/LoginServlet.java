@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package commands;
 
 import java.io.IOException;
@@ -28,7 +23,7 @@ public class LoginServlet implements Command {
             String login = request.getParameter("login");
             String senha = request.getParameter("senha");
 
-            UsuarioDAO dao = new UsuarioDAO();
+            UsuarioDAO dao =  UsuarioDAO.getInstance();
 
             if (dao.login(login, senha) != null) {
                 HttpSession httpSession = request.getSession(true);

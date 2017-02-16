@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import java.util.List;
@@ -19,23 +14,32 @@ import model.Cesta;
  */
 public class CestaDAO {
 
+    private static CestaDAO instance;
+    protected EntityManager entityManager;
+
+    public static CestaDAO getInstance() {
+        if (instance == null) {
+            instance = new CestaDAO();
+        }
+
+        return instance;
+    }
+
+    public CestaDAO() {
+        entityManager = getEntityManager();
+    }
+
     /**
-     * Método utilizado para obter o entity manager.
+     * Método padrão de projeto Singleton que garante que apenas uma instância
+     * dessa classe será criada durante toda a aplicação.
      *
-     * @return
      */
     private EntityManager getEntityManager() {
-        EntityManagerFactory factory = null;
-        EntityManager entityManager = null;
-        try {
-            //Obtém o factory a partir da unidade de persistência.
-            factory = Persistence.createEntityManagerFactory("ProjetoFrontControllerPU");
-            //Cria um entity manager.
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProjetoFrontControllerPU");
+        if (entityManager == null) {
             entityManager = factory.createEntityManager();
-            //Fecha o factory para liberar os recursos utilizado.
-        } finally {
-            //factory.close();
         }
+
         return entityManager;
     }
 
@@ -44,26 +48,20 @@ public class CestaDAO {
      *
      * @param Cesta
      * @return
-     * @throws java.lang.Exception
      */
-    public Cesta salvar(Cesta Cesta) throws Exception {
-        EntityManager entityManager = getEntityManager();
+    public Cesta salvar(Cesta Cesta) {
+
         try {
-            // Inicia uma transação com o banco de dados.
             entityManager.getTransaction().begin();
-            System.out.println("Salvando a Cesta.");
-            // Verifica se a Cesta ainda não está salva no banco de dados.
+
             if (Cesta.getId() == null) {
-                //Salva os dados da Cesta.
                 entityManager.persist(Cesta);
             } else {
-                //Atualiza os dados da Cesta.
                 Cesta = entityManager.merge(Cesta);
             }
-            // Finaliza a transação.
             entityManager.getTransaction().commit();
-        } finally {
-            entityManager.close();
+        } catch (Exception ex) {
+            entityManager.getTransaction().rollback();
         }
         return Cesta;
     }
@@ -74,19 +72,15 @@ public class CestaDAO {
      * @param id
      */
     public void excluir(Integer id) {
-        EntityManager entityManager = getEntityManager();
+
         try {
-            // Inicia uma transação com o banco de dados.
             entityManager.getTransaction().begin();
-            // Consulta a Cesta na base de dados através do seu ID.
             Cesta Cesta = entityManager.find(Cesta.class, id);
-            System.out.println("Excluindo os dados de: " + Cesta.getLogin());
-            // Remove a Cesta da base de dados.
             entityManager.remove(Cesta);
-            // Finaliza a transação.
             entityManager.getTransaction().commit();
-        } finally {
-            entityManager.close();
+
+        } catch (Exception ex) {
+            entityManager.getTransaction().rollback();
         }
     }
 
@@ -100,32 +94,22 @@ public class CestaDAO {
 
     private List<Cesta> findCestaEntities(boolean all, int maxResults, int firstResult) {
 
-        EntityManager entityManager = getEntityManager();
-        try {
-            CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Cesta.class));
-            Query q = entityManager.createQuery(cq);
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            entityManager.close();
+        CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Cesta.class));
+        Query q = entityManager.createQuery(cq);
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Cesta findCesta(Long id) {
-        EntityManager entityManager = getEntityManager();
-        try {
-            return entityManager.find(Cesta.class, id);
-        } finally {
-            entityManager.close();
-        }
+        return entityManager.find(Cesta.class, id);
     }
 
     public List<Cesta> findItens(String login) {
-        EntityManager entityManager = getEntityManager();
+
         Query q = entityManager.createQuery("SELECT c FROM Cesta c WHERE "
                 + "c.login = :login ");
 
@@ -135,14 +119,12 @@ public class CestaDAO {
     }
 
     public List<Cesta> findLogin(Integer id) {
-        EntityManager entityManager = getEntityManager();
+
         Query q = entityManager.createQuery("SELECT c.login from Cesta c WHERE "
                 + "c.id = :id ");
-      
         q.setParameter("id", id);
         List<Cesta> ls = q.getResultList();
 
         return q.getResultList();
     }
-
 }

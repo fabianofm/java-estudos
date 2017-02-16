@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import java.util.List;
@@ -19,51 +14,55 @@ import model.ServicosOpcionais;
  */
 public class ServicosOpcionaisDAO {
 
+    private static ServicosOpcionaisDAO instance;
+    protected EntityManager entityManager;
+
+    public static ServicosOpcionaisDAO getInstance() {
+        if (instance == null) {
+            instance = new ServicosOpcionaisDAO();
+        }
+        return instance;
+    }
+
+    public ServicosOpcionaisDAO() {
+        entityManager = getEntityManager();
+    }
+
     /**
-     * Método utilizado para obter o entity manager.
+     * Método padrão de projeto Singleton que garante que apenas uma instância
+     * dessa classe será criada durante toda a aplicação.
      *
-     * @return
      */
     private EntityManager getEntityManager() {
-        EntityManagerFactory factory = null;
-        EntityManager entityManager = null;
-        try {
-            //Obtém o factory a partir da unidade de persistência.
-            factory = Persistence.createEntityManagerFactory("ProjetoFrontControllerPU");
-            //Cria um entity manager.
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProjetoFrontControllerPU");
+        if (entityManager == null) {
             entityManager = factory.createEntityManager();
-            //Fecha o factory para liberar os recursos utilizado.
-        } finally {
-            //factory.close();
         }
         return entityManager;
     }
 
     /**
-     * Método utilizado para salvar ou atualizar as informações de um ServicosOpcionais.
+     * Método utilizado para salvar ou atualizar as informações de um
+     * ServicosOpcionais.
      *
      * @param ServicosOpcionais
      * @return
-     * @throws java.lang.Exception
      */
-    public ServicosOpcionais salvar(ServicosOpcionais ServicosOpcionais) throws Exception {
-        EntityManager entityManager = getEntityManager();
+    public ServicosOpcionais salvar(ServicosOpcionais ServicosOpcionais) {
+
         try {
-            // Inicia uma transação com o banco de dados.
+
             entityManager.getTransaction().begin();
-            System.out.println("Salvando a ServicosOpcionais.");
-            // Verifica se a ServicosOpcionais ainda não está salva no banco de dados.
+
             if (ServicosOpcionais.getId() == null) {
-                //Salva os dados da ServicosOpcionais.
                 entityManager.persist(ServicosOpcionais);
             } else {
-                //Atualiza os dados da ServicosOpcionais.
                 ServicosOpcionais = entityManager.merge(ServicosOpcionais);
             }
-            // Finaliza a transação.
             entityManager.getTransaction().commit();
-        } finally {
-            entityManager.close();
+
+        } catch (Exception ex) {
+            entityManager.getTransaction().rollback();
         }
         return ServicosOpcionais;
     }
@@ -74,19 +73,16 @@ public class ServicosOpcionaisDAO {
      * @param id
      */
     public void excluir(Long id) {
-        EntityManager entityManager = getEntityManager();
+
         try {
-            // Inicia uma transação com o banco de dados.
             entityManager.getTransaction().begin();
-            // Consulta a ServicosOpcionais na base de dados através do seu ID.
             ServicosOpcionais ServicosOpcionais = entityManager.find(ServicosOpcionais.class, id);
             System.out.println("Excluindo os dados de: " + ServicosOpcionais.getNome());
-            // Remove a ServicosOpcionais da base de dados.
             entityManager.remove(ServicosOpcionais);
-            // Finaliza a transação.
             entityManager.getTransaction().commit();
-        } finally {
-            entityManager.close();
+
+        } catch (Exception ex) {
+            entityManager.getTransaction().rollback();
         }
     }
 
@@ -100,28 +96,18 @@ public class ServicosOpcionaisDAO {
 
     private List<ServicosOpcionais> findServicosOpcionaisEntities(boolean all, int maxResults, int firstResult) {
 
-        EntityManager entityManager = getEntityManager();
-        try {
-            CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(ServicosOpcionais.class));
-            Query q = entityManager.createQuery(cq);
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            entityManager.close();
+        CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(ServicosOpcionais.class));
+        Query q = entityManager.createQuery(cq);
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public ServicosOpcionais findServicosOpcionais(Long id) {
-        EntityManager entityManager = getEntityManager();
-        try {
-            return entityManager.find(ServicosOpcionais.class, id);
-        } finally {
-            entityManager.close();
-        }
+        return entityManager.find(ServicosOpcionais.class, id);
     }
 
 }

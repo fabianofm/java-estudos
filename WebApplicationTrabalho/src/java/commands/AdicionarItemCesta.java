@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package commands;
 
 import dao.CestaDAO;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Cesta;
@@ -21,7 +18,7 @@ public class AdicionarItemCesta implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        try {
+      
             // pegando os parâmetros do request
             String login = request.getParameter("login");
             String[] item = request.getParameterValues("item");
@@ -37,10 +34,12 @@ public class AdicionarItemCesta implements Command {
             }
 
             RequestDispatcher d = request.getRequestDispatcher("/WEB-INF/jsp/listar-opcionais.jsp");
+        try {
             d.forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(AdicionarItemCesta.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
 
     }
 }
