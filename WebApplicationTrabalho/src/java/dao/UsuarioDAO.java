@@ -65,6 +65,26 @@ public class UsuarioDAO {
     }
     return Usuario;
   }
+  
+  /**
+   * Método utilizado para atualizar as informações de um Usuario.
+   * @param Usuario
+   * @return
+   * @throws java.lang.Exception
+   */
+  public Usuario editar(Usuario Usuario) throws Exception {
+    EntityManager entityManager = getEntityManager();
+    try {
+      // Inicia uma transação com o banco de dados.
+      entityManager.getTransaction().begin();
+      Usuario = entityManager.merge(Usuario);
+      entityManager.getTransaction().commit();
+      
+    } finally {
+      entityManager.close();
+    }
+    return Usuario;
+  }
 
   /**
    * Método que apaga a Usuario do banco de dados.
@@ -120,20 +140,24 @@ public class UsuarioDAO {
             entityManager.close();
         }
     }
- /*
-    public int getUsuarioCount() {
+    
+    public List<Usuario> findUsuarioLogin(String login) {
+        EntityManager entityManager = getEntityManager();
+        Query q = entityManager.createQuery("SELECT u FROM Usuario u WHERE "
+                + "u.login = :login ");
+        q.setParameter("login", login);
+        
         try {
-            EntityManager entityManager = getEntityManager();
-            CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
-            Root<Usuario> rt = cq.from(Usuario.class);
-            cq.select(entityManager.getCriteriaBuilder().count(rt));
-            Query q = entityManager.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
+            List<Usuario> ls = q.getResultList();
+            return q.getResultList();
         } finally {
             entityManager.close();
         }
     }
-*/
+    
+
+    
+
     public Usuario login(String login, String senha) {
          EntityManager entityManager = getEntityManager();
         Query q = entityManager.createQuery("SELECT u from Usuario u WHERE "

@@ -18,11 +18,6 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
-         <style type="text/css">
-            .odd{ background-color:beige}
-            .even{background-color:azure}
-        </style> 
     </head>
     <body role="document">
         <!-- Fixed navbar -->
@@ -39,13 +34,11 @@
                     <a class="navbar-brand" href="">Disciplina: Projeto e Implementação OO </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-
-
                     <ul class="nav navbar-nav">
                         <li><a href="<%=request.getContextPath()%>/login.jsp">Login</a></li>
                         <li><a href="<%=request.getContextPath()%>/cadastro.jsp">Cadastro</a></li>
                         <li><a href="<%=request.getContextPath()%>/Controller?command=CadastrarOpcionais">Cadastrar Opcionais</a></li>
-                        <li><a href="<%=request.getContextPath()%>/Controller?command=ListarUsuarios">Listar de Usuarios</a></li>
+                        <li><a href="<%=request.getContextPath()%>/Controller?command=ListarUsuarios">Listar Usuarios</a></li>
                         <li><a href="<%=request.getContextPath()%>/Controller?command=ListarOpcionais">Listar Opcionais</a></li>
                         <li><a href="<%=request.getContextPath()%>/Controller?command=Logout">Logout</a></li>
                     </ul>

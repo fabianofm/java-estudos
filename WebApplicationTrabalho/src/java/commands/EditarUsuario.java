@@ -22,13 +22,13 @@ import model.Usuario;
  *
  * @author fabia
  */
-public class AdicionarUsuario implements Command {
+public class EditarUsuario implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             // pegando os parâmetros do request
-            //Integer id = Integer.parseInt(request.getParameter("id"));
+            Integer id = Integer.parseInt(request.getParameter("id"));
             String nome = request.getParameter("nome");
             String email = request.getParameter("email");
             String login = request.getParameter("login");
@@ -44,7 +44,7 @@ public class AdicionarUsuario implements Command {
 
             // monta um objeto contato
             Usuario Usuario = new Usuario();
-            //Usuario.setId(id); 
+            Usuario.setId(id); 
             Usuario.setNome(nome);
             Usuario.setEmail(email);
             Usuario.setLogin(login);
@@ -53,7 +53,7 @@ public class AdicionarUsuario implements Command {
             Usuario.setDataNascimento(dataNascimento.getTime());
 
             UsuarioDAO dao = new UsuarioDAO();
-            dao.salvar(Usuario);
+            dao.editar(Usuario);
 
             RequestDispatcher d = request.getRequestDispatcher("/sucesso.jsp");
             d.forward(request, response);
